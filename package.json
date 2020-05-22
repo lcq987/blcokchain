@@ -1,0 +1,22 @@
+{
+  "name": "blcokchain",
+  "version": "1.0.0",
+  "description": "blcokchain with nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcq987/blcokchain.git"
+  },
+  "author": "Lu Changqi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lcq987/blcokchain/issues"
+  },
+  "homepage": "https://github.com/lcq987/blcokchain#readme",
+  "dependencies": {
+    "vorpal": "^1.12.0"
+  }
+}
