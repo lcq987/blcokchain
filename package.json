@@ -4,7 +4,8 @@
   "description": "blcokchain with nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/lcq987/blcokchain#readme",
   "dependencies": {
+    "cli-table": "^0.3.1",
     "vorpal": "^1.12.0"
   }
 }

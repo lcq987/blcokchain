@@ -37,16 +37,55 @@ class Blockchain{
         return this.blockchain[this.blockchain.length-1]
     }
 
+    // 交易
+    transfer(from, to, amount){
+        if(from !== '0'){
+            const blance = this.blance(from)
+            if(blance < amount){
+                console.log('not enough blance', from, blance, amount)
+                return
+            }
+        }
+        // 签名校验
+        const transObj = {from, to, amount}
+        this.data.push(transObj)
+        return transObj
+    }
+
+    // 查询余额
+    blance(address){
+        // 粗暴的办法，把所有区块遍历一遍
+        let blance = 0
+        this.blockchain.forEach(block=>{
+            if(Array.isArray(block.data)){
+                block.data.forEach(trans=>{
+                    if(address == trans.from){
+                        blance -= trans.amount
+                    }
+                    if(address == trans.to){
+                        blance += trans.amount
+                    }
+                })
+            }
+        })
+        return blance
+    }
+
     // 挖矿
-    mine(){
+    mine(address){
+        // 旷工奖励
+        this.transfer('0', address, 20)
+        
         const newBlcok = this.generateNewBlock()
 
         // 校验区块是否合法
         if(this.isValidBlock(newBlcok) && this.isValidBlcokChain()){
             this.blockchain.push(newBlcok)
+            this.data = []
             return newBlcok
         }else{
             console.log('error, Invalid Blcok!')
+            this.data = []
         }
     }
 
