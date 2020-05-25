@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lcq987/blcokchain#readme",
   "dependencies": {
     "cli-table": "^0.3.1",
+    "elliptic": "^6.5.2",
     "vorpal": "^1.12.0"
   }
 }
