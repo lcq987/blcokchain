@@ -1,9 +1,13 @@
 const vorpal = require('vorpal')()      // 命令行工具
 const Table = require('cli-table')      // 格式化命令行输出
+const rsa = require('./rsa')
 const Blockchain = require('./blockchain')
 const bc = new Blockchain()
 
 function formatLog(data){
+    if(!data || data.length === 0){
+        return
+    }
     if(!Array.isArray(data)){
         data = [data]
     }
@@ -25,9 +29,9 @@ function formatLog(data){
 
 // 挖矿
 vorpal
-    .command('mine <address>', '挖矿')
+    .command('mine', '挖矿')
     .action(function(args, callback){
-        const newBlcok = bc.mine(args.address)
+        const newBlcok = bc.mine(rsa.keys.pub)
         if(newBlcok){
             formatLog(newBlcok)
         }
@@ -44,9 +48,9 @@ vorpal
 
 // 交易
 vorpal
-    .command('trans <from> <to> <amount>', '交易')
+    .command('trans <to> <amount>', '交易')
     .action(function(args, callback){
-        let trans = bc.transfer(args.from, args.to, args.amount)
+        let trans = bc.transfer(rsa.keys.pub, args.to, args.amount)
         if(trans){
             formatLog(trans)
         }
@@ -69,6 +73,41 @@ vorpal
         formatLog({address: args.address, blance})
         callback()
     })
+
+// 查询公钥
+vorpal
+    .command('pub', '查看本地地址')
+    .action(function(args, callback){
+        this.log(rsa.keys.pub)
+        callback()
+    })
+
+// 查看网络节点列表
+vorpal
+    .command('peers', '查看网络节点列表')
+    .action(function(args, callback){
+        formatLog(bc.peers)
+        callback()
+    })
+
+// 跟网络上其他节点打招呼
+vorpal
+.command('chat <message>', '跟网络上其他节点打招呼')
+.action(function(args, callback){
+    bc.boradcast({
+        type: 'hi',
+        data: args.message
+    })
+    callback()
+})
+
+// 查看未打包交易
+vorpal
+.command('pedding', '查看未打包交易')
+.action(function(args, callback){
+    formatLog(bc.data)
+    callback()
+})
 
 console.log('welcome to chian')
 vorpal.exec('help')
