@@ -3,6 +3,7 @@ const Table = require('cli-table')      // 格式化命令行输出
 const rsa = require('./rsa')
 const Blockchain = require('./blockchain')
 const bc = new Blockchain()
+const keys = rsa.generateKeys()
 
 function formatLog(data){
     if(!data || data.length === 0){
@@ -31,7 +32,7 @@ function formatLog(data){
 vorpal
     .command('mine', '挖矿')
     .action(function(args, callback){
-        const newBlcok = bc.mine(rsa.keys.pub)
+        const newBlcok = bc.mine(keys.pub)
         if(newBlcok){
             formatLog(newBlcok)
         }
@@ -50,7 +51,7 @@ vorpal
 vorpal
     .command('trans <to> <amount>', '交易')
     .action(function(args, callback){
-        let trans = bc.transfer(rsa.keys.pub, args.to, args.amount)
+        let trans = bc.transfer(keys.pub, args.to, args.amount)
         if(trans){
             formatLog(trans)
         }
@@ -78,7 +79,7 @@ vorpal
 vorpal
     .command('pub', '查看本地地址')
     .action(function(args, callback){
-        this.log(rsa.keys.pub)
+        this.log(keys.pub)
         callback()
     })
 

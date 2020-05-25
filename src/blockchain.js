@@ -36,7 +36,7 @@ class Blockchain{
         this.peers = []
         this.remote = {}
         // 种子节点
-        this.seed = {address: 'localhost', port: 8001}
+        this.seed = {address: '39.96.50.37', port: 8001}
         this.udp = dgram.createSocket('udp4')
         this.init()
     }
